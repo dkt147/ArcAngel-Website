@@ -441,6 +441,17 @@ span.back-card-lable {
     line-height: 30px;
     padding: 0px 90px;
 }
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn.primary:disabled {
+  background: linear-gradient(90deg, #cccccc 0%, #999999 100%);
+  color: #666666;
+}
   </style>
 </head>
 <body>
@@ -736,7 +747,7 @@ span.back-card-lable {
   $qs('#backBtn2').addEventListener('click', ()=> showStep(1));
   $qs('#createCardBtn').addEventListener('click', ()=> showStep(3));
   $qs('#backFrom3').addEventListener('click', ()=> showStep(2));
-  $qs('#doneBtn').addEventListener('click', ()=> showStep(4));
+  // $qs('#doneBtn').addEventListener('click', ()=> showStep(4));
   $qs('#restartBtn').addEventListener('click', ()=> location.reload());
 
   // clickable dots
@@ -970,6 +981,158 @@ span.back-card-lable {
   document.getElementById('buyCard').addEventListener('click', ()=> alert('Buy Card — (no action in demo)'));
 
 })();
+
+/* ---------- API Integration for Done and Buy Card buttons ---------- */
+(function(){
+  const doneBtn = document.getElementById('doneBtn');
+  const buyCardBtn = document.getElementById('buyCard');
+  const API_URL = 'https://on10.io/arc/api/create_order.php';
+
+  async function submitFormData(actionType = 'done') {
+    // Validate required fields first
+    const fullName = document.getElementById('fullName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    
+    if (!fullName || !email) {
+      alert('Please fill in all required fields (Name and Email)');
+      return;
+    }
+
+    // Collect all form data
+    const formData = new FormData();
+    
+    // Basic information from step 1
+    formData.append('full_name', fullName);
+    formData.append('email', email);
+    
+    // Selected chips (reasons)
+    const selectedChips = Array.from(document.querySelectorAll('.chip.selected'))
+      .map(chip => chip.dataset.val)
+      .join(',');
+    formData.append('reason', selectedChips);
+    
+    // Creator type from step 2
+    formData.append('creator_type', document.getElementById('customSelectText').textContent);
+    
+    // Address information from step 2
+    formData.append('address_1', document.getElementById('addr1').value.trim());
+    formData.append('address_2', document.getElementById('addr2').value.trim());
+    formData.append('city', document.getElementById('city').value.trim());
+    formData.append('state', document.getElementById('state').value.trim());
+    formData.append('postal_code', document.getElementById('postal').value.trim());
+    formData.append('country', document.getElementById('country').value.trim());
+    
+    // Handle profile photo upload
+    const profileFileInput = document.getElementById('uploadProfile');
+    if (profileFileInput.files && profileFileInput.files[0]) {
+      formData.append('photo', profileFileInput.files[0]);
+    }
+    
+    // Handle background photo upload
+    const bgFileInput = document.getElementById('uploadBg');
+    if (bgFileInput.files && bgFileInput.files[0]) {
+      formData.append('bg', bgFileInput.files[0]);
+    }
+
+    try {
+      // Show loading state
+      const originalBuyText = buyCardBtn.textContent;
+      const originalDoneText = doneBtn.textContent;
+      
+      if (actionType === 'buy') {
+        buyCardBtn.textContent = 'Processing...';
+        buyCardBtn.disabled = true;
+      } else {
+        doneBtn.textContent = 'Processing...';
+        doneBtn.disabled = true;
+      }
+
+      // Make API call
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        body: formData
+      });
+
+      // Check if response is successful
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+       const result = await response.json();
+      
+      // Handle response based on the message
+      if (result.message === "Order created successfully") {
+        // Success! Order was created
+        console.log('Order created:', result.order);
+        console.log('User ID:', result.user_id);
+        console.log('Email sent:', result.email_sent);
+        
+        // if (actionType === 'buy') {
+          // Initiate Stripe payment
+          await initiateStripePaymentClientSide(result.order);
+        // } else {
+        //   // Show success step for "Done" button
+        //   showStep(4);
+        // }
+      } else if (result.message === "User with this email or name already exists") {
+        // Handle duplicate user error
+        alert('An account with this email or name already exists. Please use different credentials.');
+      } else {
+        // Handle other error messages from backend
+        throw new Error(result.message || 'Unknown response from server');
+      }
+
+    } catch (error) {
+      console.error('API Error:', error);
+      alert(`Failed to submit form: ${error.message}`);
+    } finally {
+      // Reset button states
+      buyCardBtn.textContent = 'Buy Card';
+      buyCardBtn.disabled = false;
+      doneBtn.textContent = 'Done';
+      doneBtn.disabled = false;
+    }
+  }
+
+  
+  async function initiateStripePaymentClientSide(order) {
+     try {
+    // Create a Payment Link in Stripe dashboard and redirect to it
+    const paymentLink = 'https://buy.stripe.com/00w5kEbOVcBX66M9SK8Vi00';
+    
+    // Add order info as query parameters
+    const url = new URL(paymentLink);
+    url.searchParams.set('client_reference_id', order.id.toString());
+    url.searchParams.set('prefilled_email', email);
+    
+    // Add additional metadata for better tracking
+    url.searchParams.set('order_id', order.id.toString());
+    if (fullName) {
+      url.searchParams.set('prefilled_customer_name', fullName);
+    }
+    
+    console.log('Redirecting to Stripe payment:', url.toString());
+    
+    // Redirect to Stripe payment page
+    window.location.href = url.toString();
+
+  } catch (error) {
+    console.error('Stripe Error:', error);
+    alert(`Payment initialization failed: ${error.message}. Please try again.`);
+    
+    // Fallback: Direct redirect without parameters
+    setTimeout(() => {
+      window.location.href = 'https://buy.stripe.com/00w5kEbOVcBX66M9SK8Vi00';
+    }, 2000);
+  }
+}
+
+  // Add event listeners to buttons
+  doneBtn.addEventListener('click', () => submitFormData('done'));
+  buyCardBtn.addEventListener('click', () => submitFormData('buy'));
+})();
 </script>
+
+
 </body>
 </html>

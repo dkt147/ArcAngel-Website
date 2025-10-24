@@ -208,7 +208,7 @@
     }
 
     .join-cell.time {
-      text-align: right;
+      /* text-align: right; */
     }
 
     .step-btn {
@@ -298,121 +298,23 @@
             <div>Name</div>
             <div>World</div>
             <div>City</div>
-            <div>Just Now</div>
+            <div>Time</div>
           </div>
-        <div class="join-list">
+        <div class="join-list" id="joinList">
 
 
-          <div class="join-row">
-            <div class="join-cell">01</div>
-            <div class="join-cell">Cooper, Kristin</div>
-            <div class="join-cell">Medicine</div>
-            <div class="join-cell">Modesto</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-          <div class="join-row">
-            <div class="join-cell">02</div>
-            <div class="join-cell">Nguyen, Shane</div>
-            <div class="join-cell">Intimidation</div>
-            <div class="join-cell">Davie</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-          <div class="join-row">
-            <div class="join-cell">03</div>
-            <div class="join-cell">Flores, Juanita</div>
-            <div class="join-cell">Perception</div>
-            <div class="join-cell">Norwalk</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-          <div class="join-row">
-            <div class="join-cell">04</div>
-            <div class="join-cell">Miles, Esther</div>
-            <div class="join-cell">Performance</div>
-            <div class="join-cell">Cedar Rapids</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-          <div class="join-row">
-            <div class="join-cell">05</div>
-            <div class="join-cell">Black, Marvin</div>
-            <div class="join-cell">Sleight of Hand</div>
-            <div class="join-cell">Woodbridge</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-            <div class="join-row">
-            <div class="join-cell">05</div>
-            <div class="join-cell">Black, Marvin</div>
-            <div class="join-cell">Sleight of Hand</div>
-            <div class="join-cell">Woodbridge</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-            <div class="join-row">
-            <div class="join-cell">05</div>
-            <div class="join-cell">Black, Marvin</div>
-            <div class="join-cell">Sleight of Hand</div>
-            <div class="join-cell">Woodbridge</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-            <div class="join-row">
-            <div class="join-cell">05</div>
-            <div class="join-cell">Black, Marvin</div>
-            <div class="join-cell">Sleight of Hand</div>
-            <div class="join-cell">Woodbridge</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-            <div class="join-row">
-            <div class="join-cell">05</div>
-            <div class="join-cell">Black, Marvin</div>
-            <div class="join-cell">Sleight of Hand</div>
-            <div class="join-cell">Woodbridge</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
-
-            <div class="join-row">
-            <div class="join-cell">05</div>
-            <div class="join-cell">Black, Marvin</div>
-            <div class="join-cell">Sleight of Hand</div>
-            <div class="join-cell">Woodbridge</div>
-            <div class="join-cell time">Just Now</div>
-          </div>
         </div>
 
     
       </div>
 
       <!-- RIGHT PANEL -->
-      <div class="card-right">
+      <div class="card-right" id="cityRace">
           <div class="left-head-left">
             <h2>City race</h2>
             <p>Glow = Leading</p>
           </div>
-        <div class="city">
-          <div class="city-name"><span>Tampa (FL)</span><span>154</span></div>
-          <div class="city-progress"><div class="city-bar" data-value="154"></div></div>
-        </div>
-        <div class="city">
-          <div class="city-name"><span>San Juan</span><span>540</span></div>
-          <div class="city-progress"><div class="city-bar" data-value="540"></div></div>
-        </div>
-        <div class="city">
-          <div class="city-name"><span>Herne</span><span>600</span></div>
-          <div class="city-progress"><div class="city-bar" data-value="600"></div></div>
-        </div>
-        <div class="city">
-          <div class="city-name"><span>Avellaneda</span><span>740</span></div>
-          <div class="city-progress"><div class="city-bar" data-value="740"></div></div>
-        </div>
-        <div class="city">
-          <div class="city-name"><span>Vladikavkaz (Osetinskaya ASSR)</span><span>85</span></div>
-          <div class="city-progress"><div class="city-bar" data-value="85"></div></div>
-        </div>
+       
       </div>
     </div>
     <button class="step-btn" id="openFormBtn" onclick="window.parent.openFormModal()">Step In</button>
@@ -427,7 +329,7 @@
         ease: "power2.out"
       });
 
-      const maxValue = 740;
+      const maxValue = 100;
       document.querySelectorAll(".city-bar").forEach(bar => {
         const value = bar.dataset.value;
         const percent = (value / maxValue) * 100;
@@ -440,5 +342,79 @@
       });
     });
   </script>
+  <script>
+  // Get the container
+  const joinList = document.getElementById('joinList');
+
+  // Fetch API data
+  fetch('https://on10.io/arc/api/get_orders.php')
+    .then(response => response.json())
+    .then(data => {
+      const orders = data.orders;
+
+      // Loop through each order and create HTML rows
+      orders.forEach((order, index) => {
+        const row = document.createElement('div');
+        row.className = 'join-row';
+
+        // You can customize what you display here
+        row.innerHTML = `
+          <div class="join-cell">${index + 1}</div>
+          <div class="join-cell">${order.username}</div>
+          <div class="join-cell">${order.cards}</div>
+          <div class="join-cell">${order.city}</div>
+          <div class="join-cell time">${timeAgo(order.created_at)}</div>
+        `;
+
+        joinList.appendChild(row);
+      });
+    })
+    .catch(error => console.error('Error fetching orders:', error));
+
+  // Optional: function to display "Just Now", "X minutes ago", etc.
+  function timeAgo(dateString) {
+    const now = new Date();
+    const past = new Date(dateString);
+    const diff = Math.floor((now - past) / 1000); // seconds
+
+    if (diff < 60) return 'Just Now';
+    if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+    return Math.floor(diff / 86400) + ' days ago';
+  }
+</script>
+<script>
+const cityRaceContainer = document.getElementById('cityRace');
+
+// Fetch API data
+fetch('https://on10.io/arc/api/get_orders.php')
+  .then(response => response.json())
+  .then(data => {
+    const regions = data.regions;
+
+    regions.forEach(region => {
+      // Create city container
+      const cityDiv = document.createElement('div');
+      cityDiv.className = 'city';
+
+      const maxValue = 100;
+const widthPercent = (region.order_count / maxValue) * 100;
+
+      // Inner HTML for city name and count
+      cityDiv.innerHTML = `
+        <div class="city-name">
+          <span>${region.city}</span>
+          <span>${region.order_count}</span>
+        </div>
+        <div class="city-progress">
+          <div class="city-bar" data-value="${region.order_count}" style="width: ${widthPercent}%"></div>
+        </div>
+      `;
+
+      cityRaceContainer.appendChild(cityDiv);
+    });
+  })
+  .catch(err => console.error('Error fetching city data:', err));
+</script>
 </body>
 </html>

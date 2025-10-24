@@ -10,19 +10,46 @@
     --secondary-font: 'Instrument Sans', sans-serif;
 
     /* Color variables */
-    --yellow: #F2C202;   
-    --Purple: #FF11CB; 
+    --yellow: #F2C202;
+    --Purple: #FF11CB;
     --blue: #1956DA;
     --purple-light: #F83ACF;
     --white: #FFFFFF;
     --black: #000000;
     --black-light: #1A1A1A;
     --orange: #F83A3A;
+
+    /* Cinematic mode colors */
+    --cinematic-yellow: #07ffac;
+    --cinematic-purple: #061dee;
+    --cinematic-blue: #00BFFF;
+    --cinematic-purple-light: #186136;
+    --cinematic-orange: #ff6f3b;
 }
 
 a {
     text-decoration: none;
     color: inherit;
+}
+
+/* Background Video */
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* Body Overlay */
+.body-overlay {
+    position: fixed;
+    inset: 0;
+    background: #00000094;
+    pointer-events: none;
+    z-index: -1;
 }
 .hero{
     position: relative;
@@ -41,7 +68,6 @@ a {
     z-index: -1;
 }
 .hero-content{
-    background-color: #00000096;
     width: 100%;
     height: 100vh;
 }
@@ -54,7 +80,7 @@ a {
 }
 a.btn-primary {
     background: linear-gradient(90deg, var(--blue), var(--purple-light));
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
     padding: 0.9rem 2.8rem;
     border-radius: 50px;
@@ -84,7 +110,7 @@ a.btn-primary {
 }
 .hero-main-content p {
     font-size: 1.2rem;
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
     width: 1130px;
     text-align: center;
@@ -92,7 +118,7 @@ a.btn-primary {
 }
 a.btn-secondary {
     background: linear-gradient(90deg, var(--yellow), var(--orange));
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
     padding: 0.9rem 2.5rem;
     border-radius: 50px;
@@ -131,7 +157,7 @@ a.btn-secondary {
     justify-content: center;
 }
 .second-content h2 {
-    color: white;
+    color: var(--white);
     font-family: var(--primary-font);
     font-size: 1.8rem;
     font-weight: 600;
@@ -154,13 +180,13 @@ section.third {
 }
 .third-content h2 {
     font-family: var(--primary-font);
-    color: white;
+    color: var(--white);
     font-size: 2rem;
     width: 400px;
 }
 .third-content p {
     font-size: 1rem;
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
     padding-top: 10px;
     padding-bottom: 20px;
@@ -185,7 +211,7 @@ section.third {
   height: calc(100% - 0px);
   width: 0%;
   border-radius: 10px;
-  background: linear-gradient(90deg, #007bff, #ff00ff);
+  background: linear-gradient(90deg, var(--blue), var(--Purple));
 }
 .progress-handle {
     position: absolute;
@@ -194,14 +220,14 @@ section.third {
     width: 14px;
     height: calc(100% - 0px);
     border-radius: 20px;
-    background: #ff00ff;
+    background: var(--Purple);
     transform: translateX(-50%);
 }
 
 
 .third-content h6 {
     font-size: 1.1rem;
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
     padding-top: 15px;
     font-weight: 500;
@@ -239,13 +265,13 @@ section.fourth {
 }
 .fourth-right h2 {
     font-family: var(--primary-font);
-    color: white;
+    color: var(--white);
     font-size: 2rem;
     width: 400px;
 }
 .fourth-right p {
     font-size: 1rem;
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
     padding-top: 10px;
     padding-bottom: 20px;
@@ -269,7 +295,7 @@ section.fourth {
     height: calc(100% - 0px);
     width: 0%;
     border-radius: 10px;
-    background: linear-gradient(90deg, #007bff, #ff00ff);
+    background: linear-gradient(90deg, var(--blue), var(--Purple));
 }
 .neon-bar-handle {
     position: absolute;
@@ -278,7 +304,7 @@ section.fourth {
     width: 14px;
     height: calc(100% - 0px);
     border-radius: 20px;
-    background: #ff00ff;
+    background: var(--Purple);
     transform: translateX(-50%);
 }
 .neon-bar-text {
@@ -286,8 +312,8 @@ section.fourth {
     top: 50%;
     right: 0;
     transform: translateY(-50%);
-    background: rgb(0 0 0 / 0%);
-    color: #ffffff;
+    background: var(--black-light);
+    color: var(--white);
     font-family: "Inter", sans-serif;
     font-size: 14px;
     padding: 0px 14px;
@@ -326,7 +352,7 @@ section.five {
 }
 section.five h2 {
     font-family: var(--primary-font);
-    color: white;
+    color: var(--white);
     font-size: 2.5rem;
 }
 .icon-card {
@@ -338,8 +364,8 @@ section.five h2 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    border-left: 1px solid white;
-    border-right: 1px solid white;
+    border-left: 1px solid var(--white);
+    border-right: 1px solid var(--white);
 }
 h3.icon-heading {
     font-family: var(--primary-font);
@@ -353,7 +379,7 @@ h3.icon-heading {
     padding-left: 20px;
 }
 p.icon-text {
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
     font-size: 1rem;
     font-weight: 400;
@@ -374,7 +400,7 @@ img.icon {
 .six {
     width: 100%;
     height: 800px;
-    background-image: url(/Assets/Media/Images/six-bg.png);
+    background-image: url('file:///C:/Users/Daniyal%20Khan/Downloads/New%20Project%20(2)/New%20Project/Assets/Media/Images/s_bg.png');
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -422,11 +448,11 @@ section.seven {
 }
 .seven-left h2 {
     font-family: var(--primary-font);
-    color: white;
+    color: var(--white);
     font-size: 2rem;
 }
 .seven-left p {
-    color: white;
+    color: var(--white);
     font-family: var(--secondary-font);
 }
 .seven-content-main {
@@ -529,7 +555,7 @@ section.seven {
 }
 
 .seven-right .upload-text h3 {
-  background: linear-gradient(90deg, #FFD600, #FF00B8);
+  background: linear-gradient(90deg, var(--yellow), var(--Purple));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 1.4rem;
@@ -538,11 +564,11 @@ section.seven {
 }
 
 .seven-right .upload-text .highlight {
-  color: #ff00b8;
+  color: var(--Purple);
 }
 
 .seven-right .upload-text p {
-  color: #aaa;
+  color: var(--white);
   font-size: 0.9rem;
   margin-top: 6px;
   font-family: var(--secondary-font);
@@ -582,7 +608,7 @@ section.seven {
     justify-content: center;
 }
 .footer h6 {
-    color: white;
+    color: var(--white);
     text-align: center;
     font-family: var(--primary-font);
     font-size: 1.3rem;
@@ -591,28 +617,6 @@ section.seven {
 img.social {
     width: 100px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .modal {
   display: none;
   position: fixed;
@@ -652,4 +656,14 @@ img.social {
     overflow: hidden;
     backdrop-filter: blur(20px);
 
+}
+
+button#cinematicToggle {
+    background: linear-gradient(90deg, var(--blue), var(--purple-light));
+    color: var(--white);
+    font-family: var(--secondary-font);
+    padding: 0.9rem 2.8rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    border: none;
 }

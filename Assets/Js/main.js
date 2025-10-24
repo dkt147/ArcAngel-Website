@@ -7,15 +7,15 @@
   });
 
   wingsTl.to(".left", {
-    rotationY: 90,
+    rotationY: 70,
     opacity: 0.8,
-    duration: 1,
+    duration: 0.5,
     ease: "power2.inOut"
   }, 0)
   .to(".right", {
-    rotationY: -90,
+    rotationY: -70,
     opacity: 0.8,
-    duration: 1,
+    duration: 0.5,
     ease: "power2.inOut"
   }, 0);
 
@@ -159,6 +159,33 @@ function openFormModal() {
   document.getElementById('formModal').style.display = 'flex';
   document.getElementById('formFrame').src = 'form.html';
 }
+
+// Cinematic mode toggle
+const cinematicToggle = document.getElementById('cinematicToggle');
+let cinematicMode = false;
+
+cinematicToggle.addEventListener('click', () => {
+  cinematicMode = !cinematicMode;
+  const root = document.documentElement;
+
+  if (cinematicMode) {
+    // Switch to cinematic colors
+    root.style.setProperty('--yellow', 'var(--cinematic-yellow)');
+    root.style.setProperty('--Purple', 'var(--cinematic-purple)');
+    root.style.setProperty('--blue', 'var(--cinematic-blue)');
+    root.style.setProperty('--purple-light', 'var(--cinematic-purple-light)');
+    root.style.setProperty('--orange', 'var(--cinematic-orange)');
+    cinematicToggle.textContent = 'Cinematic Mode: On';
+  } else {
+    // Switch back to default colors
+    root.style.setProperty('--yellow', '#F2C202');
+    root.style.setProperty('--Purple', '#FF11CB');
+    root.style.setProperty('--blue', '#1956DA');
+    root.style.setProperty('--purple-light', '#F83ACF');
+    root.style.setProperty('--orange', '#F83A3A');
+    cinematicToggle.textContent = 'Cinematic Mode: Off';
+  }
+});
 
 // Make functions global
 window.closeFormModal = closeFormModal;
