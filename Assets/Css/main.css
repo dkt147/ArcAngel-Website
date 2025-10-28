@@ -134,7 +134,7 @@ a.btn-secondary {
     justify-content: center;
     padding-top: 80px;
     padding-bottom: 80px;
-    background-image: url(/Assets/Media/Images/wing\ background.png);
+    background-image: url("/Assets/Media/Images/wing-background.png");
         background-repeat: no-repeat;
     background-position: bottom;
     background-size: auto;
@@ -400,7 +400,7 @@ img.icon {
 .six {
     width: 100%;
     height: 800px;
-    background-image: url('file:///C:/Users/Daniyal%20Khan/Downloads/New%20Project%20(2)/New%20Project/Assets/Media/Images/s_bg.png');
+    background-image: url("/Assets/Media/Images/six-bg.png");
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -666,4 +666,264 @@ button#cinematicToggle {
     border-radius: 50px;
     font-size: 1rem;
     border: none;
+}
+
+
+/* pricing-page */
+
+
+.pricing-main {
+    width: 100%;
+    background-image: url("/Assets/Media/Images/pricing-main-bg.png");
+    background-repeat: no-repeat;
+    background-size: 90%;
+    background-position: top center;
+}
+.pricing-top {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px 50px;
+    align-items: center;
+}
+.pricing-logo img {
+    width: 110px;
+}
+.pricing-main-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 250px;
+}
+
+.pricing-main-content h1 {
+    font-family: var(--primary-font);
+    font-size: 4rem;
+    font-weight: 700;
+    text-align: center;
+    background: linear-gradient(90deg, var(--yellow), var(--Purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #00000000;
+    display: inline-block;
+    width: 1200px;
+}
+.pricing-main-content h6 {
+    font-family: var(--secondary-font);
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding-top: 20px;
+}
+.pricing-main-content p {
+    font-family: var(--secondary-font);
+    color: var(--white);
+    font-size: 1rem;
+    width: 770px;
+    text-align: center;
+    padding-top: 10px;
+}
+.pricing-main-card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 100px 20px;
+    width: 1600px;
+}
+.pricing-card-content {
+    width: 100%;
+    height: 100%;
+}
+.pricing-card {
+    padding: 20px;
+    background: #0F0F0F;
+    border: 2px solid white;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+}
+.pricing-card-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.pricing-card-icon h3 {
+    font-family: var(--secondary-font);
+    color: var(--white);
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+.pricing-card-price {
+    padding-top: 25px;
+}
+.pricing-card-price h2 {
+    font-family: var(--secondary-font);
+    color: var(--white);
+    font-size: 3.5rem;
+    font-weight: 500;
+}
+.pricing-card-price h3 {
+    font-family: var(--secondary-font);
+    color: var(--white);
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding-top: 10px;
+}
+.pricing-card-price p {
+    font-family: var(--secondary-font);
+    color: var(--white);
+    font-size: 1rem;
+    font-weight: 200;
+    padding-top: 10px;
+    line-height: 1.4rem;
+}
+
+.pricing-card-price-button{
+        background: linear-gradient(90deg, var(--yellow), var(--orange));
+    color: var(--white);
+    font-family: var(--secondary-font);
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+    margin-top: 70px;
+    text-align: center;
+
+}
+.pricing-card-comtainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pricing-card:hover {
+    background: linear-gradient(133deg, #F83A3A, #FF11CB);
+}
+.pricing-card:hover .pricing-card-price-button {
+  background: white; /* white background */
+  color: #F83A3A;  
+}
+
+
+.the-call-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 100px;
+    margin-top: -150px;
+}
+
+.the-call-left {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-image: url(/Assets/Media/Images/pricing-statue-color.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow: hidden;
+    padding: 145px 0px;
+}
+
+.the-call-right {
+  width: 50%;
+}
+
+.the-call-right h2 {
+    font-family: var(--primary-font);
+    color: var(--white);
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.the-call-right p {
+    font-size: 1.2rem;
+    color: var(--white);
+    font-family: var(--secondary-font);
+    padding-top: 10px;
+    padding-bottom: 60px;
+}
+
+img.call-statue {
+  z-index: 1;
+}
+
+img.call-statue-bg {
+  position: absolute;
+  z-index: 0;
+}
+
+/* CTA Button Styling */
+.cta-button {
+    background: linear-gradient(90deg, var(--yellow), var(--orange));
+    color: var(--white);
+    font-family: var(--secondary-font);
+    padding: 0.9rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    line-height: 1.4rem;
+
+}
+.movement-section {
+  width: 100%;
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    background-image: url("/Assets/Media/Images/movement-section-bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movement-content {
+  text-align: center;
+  max-width: 900px;
+}
+
+.movement-content h2 {
+  font-family: var(--primary-font);
+  font-size: 2.8rem;
+  color: var(--black);
+  margin-bottom: 1rem;
+}
+.pricing-footer {
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+}
+
+.pricing-main-footer {
+    width: 1440px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 130px;
+    border-top: 1px solid #ffffff54;
+    padding-top: 50px;
+    padding-bottom: 30px;
+}
+.pricing-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pricing-main-footer h6 {
+    color: var(--white);
+    text-align: center;
+    font-family: var(--primary-font);
+    font-size: 1.3rem;
+    padding-top: 20px;
+}
+img.social {
+    width: 100px;
 }
