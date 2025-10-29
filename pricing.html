@@ -17,12 +17,31 @@
       href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&display=swap"
       rel="stylesheet"
     />
+    <!-- Stripe.js -->
+    <script src="https://js.stripe.com/v3/"></script>
     <!-- CSS file connect -->
     <link rel="stylesheet" href="Assets/Css/main.css" />
     <!-- GSAP Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-    <style></style>
+    <style>
+      /* Additional styles for loading states */
+      .btn-loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      
+      .btn-loading::after {
+        content: '...';
+        animation: loading 1.5s infinite;
+      }
+      
+      @keyframes loading {
+        0%, 33% { content: '.'; }
+        34%, 66% { content: '..'; }
+        67%, 100% { content: '...'; }
+      }
+    </style>
   </head>
   <body style="background-color: black">
     <div class="pricing-main">
@@ -62,12 +81,14 @@
                 <h3>Your everyday access card.</h3>
                 <p>
                   Entry-level perks like early RSVP, line-skip, and local
-                  pop-ups. Perfect for staying connected to what’s happening
+                  pop-ups. Perfect for staying connected to what's happening
                   near you.
                 </p>
               </div>
             </div>
-            <a href="#" class="pricing-card-price-button">Get Started</a>
+            <button class="pricing-card-price-button" data-tier="common" data-price="75">
+              Get Started
+            </button>
           </div>
 
           <div class="pricing-card">
@@ -85,7 +106,9 @@
                 </p>
               </div>
             </div>
-            <a href="#" class="pricing-card-price-button">Get Started</a>
+            <button class="pricing-card-price-button" data-tier="rare" data-price="150">
+              Get Started
+            </button>
           </div>
 
           <div class="pricing-card">
@@ -104,7 +127,9 @@
                 </p>
               </div>
             </div>
-            <a href="#" class="pricing-card-price-button">Get Started</a>
+            <button class="pricing-card-price-button" data-tier="legendary" data-price="300">
+              Get Started
+            </button>
           </div>
 
           <div class="pricing-card">
@@ -122,7 +147,9 @@
                 </p>
               </div>
             </div>
-            <a href="#" class="pricing-card-price-button">Get Started</a>
+            <button class="pricing-card-price-button" data-tier="mythic" data-price="500">
+              Get Started
+            </button>
           </div>
         </div>
       </div>
@@ -130,7 +157,7 @@
 
     <section class="the-call-section">
       <div class="the-call-right">
-        <h2>Why It’s Different</h2>
+        <h2>Why It's Different</h2>
         <p>
           Arc Angels blend real-world access with digital presence.<br />Every
           card is proof you were there, a marker of moments lived, not just
@@ -172,7 +199,7 @@
       <div class="movement-content">
         <h2>
           Not a membership. A movement you <br />can touch.<br />Tap in. Show
-          up. Live the culture.
+          up. Live the culture.
         </h2>
       </div>
     </section>
@@ -195,11 +222,82 @@
     <script src="Assets/Js/main.js"></script>
 
     <script>
+      // Initialize Stripe with your publishable key
+      const stripe = Stripe('pk_test_51RuM3kIXzSnWUbKSNbir7DyFb6VMVaRvtRTONtLPw1PAapnxVNjhdcHdEDnb5jQQaDXRc6FHfW0yiVJxc5qkYMJ600Ft2sgKwe');
+
+      // Payment handler function
+      async function handlePayment(tier, price, button) {
+        try {
+          // Get user data from localStorage
+          const savedData = localStorage.getItem("arcUserData");
+          const userData = savedData ? JSON.parse(savedData) : {};
+          
+          // Call PHP backend to create checkout session
+          const response = await fetch('https://on10.io/arc/api/create-checkout-session.php', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              tier: tier,
+              price: price,
+              userData: userData
+            }),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            throw new Error(result.error || 'Failed to create checkout session');
+          }
+
+          // Redirect to Stripe Checkout with session ID from PHP
+          const redirectResult = await stripe.redirectToCheckout({
+            sessionId: result.sessionId
+          });
+
+          if (redirectResult.error) {
+            throw new Error(redirectResult.error.message);
+          }
+
+        } catch (error) {
+          console.error('Payment processing error:', error);
+          alert('Error: ' + error.message);
+          
+          // Remove loading state
+          if (button) {
+            button.textContent = 'Get Started';
+            button.classList.remove('btn-loading');
+          }
+        }
+      }
+
+      // Add click event listeners to all pricing buttons
+      document.addEventListener('DOMContentLoaded', function() {
+        const pricingButtons = document.querySelectorAll('.pricing-card-price-button');
+        
+        pricingButtons.forEach(button => {
+          button.addEventListener('click', function() {
+            const tier = this.getAttribute('data-tier');
+            const price = parseInt(this.getAttribute('data-price'));
+            
+            // Add loading state
+            const originalText = this.textContent;
+            this.textContent = 'Processing';
+            this.classList.add('btn-loading');
+            
+            // Handle payment
+            handlePayment(tier, price, this);
+          });
+        });
+      });
+
+      // Load user data on page load
       window.addEventListener("DOMContentLoaded", () => {
         const savedData = localStorage.getItem("arcUserData");
         if (savedData) {
           const user = JSON.parse(savedData);
-          console.log(user); 
+          console.log('User data loaded:', user);
         }
       });
     </script>
