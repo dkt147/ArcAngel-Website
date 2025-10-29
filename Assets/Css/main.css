@@ -134,7 +134,7 @@ a.btn-secondary {
     justify-content: center;
     padding-top: 80px;
     padding-bottom: 80px;
-    background-image: url("/Assets/Media/Images/wing-background.png");
+    background-image: url("D:\\Projects\\ArcAngel\\Assets\\Media\\Images\\wing-background.png");
         background-repeat: no-repeat;
     background-position: bottom;
     background-size: auto;
@@ -329,7 +329,7 @@ img.statue {
     align-items: center;
     justify-content: center;
     position: relative;
-    background-image: url(/Assets/Media/Images/statue-bg-color.png);
+    background-image: url(D:\\Projects\\ArcAngel\\Assets\\Media\\Images\\statue-bg-color.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -400,7 +400,7 @@ img.icon {
 .six {
     width: 100%;
     height: 800px;
-    background-image: url("/Assets/Media/Images/six-bg.png");
+    background-image: url("D:\\Projects\\ArcAngel\\Assets\\Media\\Images\\six-bg.png");
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
@@ -674,7 +674,7 @@ button#cinematicToggle {
 
 .pricing-main {
     width: 100%;
-    background-image: url("/Assets/Media/Images/pricing-main-bg.png");
+    background-image: url("D:\\Projects\\ArcAngel\\Assets\\Media\\Images\\pricing-main-bg.png");
     background-repeat: no-repeat;
     background-size: 90%;
     background-position: top center;
@@ -824,7 +824,7 @@ button#cinematicToggle {
     align-items: center;
     justify-content: center;
     position: relative;
-    background-image: url(/Assets/Media/Images/pricing-statue-color.png);
+    background-image: url(D:\\Projects\\ArcAngel\\Assets\\Media\\Images\\pricing-statue-color.png);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -877,7 +877,7 @@ img.call-statue-bg {
   display: flex;
   align-items: center;
   justify-content: center;
-    background-image: url("/Assets/Media/Images/movement-section-bg.png");
+    background-image: url("D:\\Projects\\ArcAngel\\Assets\\Media\\Images\\movement-section-bg.png");
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
